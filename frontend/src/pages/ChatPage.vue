@@ -508,7 +508,7 @@ onMounted(async () => {
 }
 
 .message-content {
-  max-width: 70%;
+  max-width: 80%;
   padding: 0.75rem 1rem;
   border-radius: 18px;
   position: relative;

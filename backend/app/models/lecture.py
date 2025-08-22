@@ -9,7 +9,10 @@ class PyObjectId(ObjectId):
         from pydantic_core import core_schema
         return core_schema.no_info_after_validator_function(
             cls.validate,
-            core_schema.str_schema(),
+            core_schema.union_schema([
+                core_schema.is_instance_schema(ObjectId),
+                core_schema.str_schema()
+            ]),
             serialization=core_schema.to_string_ser_schema()
         )
 
@@ -30,7 +33,7 @@ class Lecture(BaseModel):
     grade: Optional[str] = None  # elementary, middle, high, university
     description: Optional[str] = None
     requirements: str
-    content: Optional[str] = None
+    content: Optional[Any] = None  # Can be string or dict for structured content
     status: str = "draft"  # draft, completed, published
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
@@ -56,7 +59,7 @@ class LectureUpdateRequest(BaseModel):
     grade: Optional[str] = None
     description: Optional[str] = None
     requirements: Optional[str] = None
-    content: Optional[str] = None
+    content: Optional[Any] = None  # Can be string or dict for structured content
     status: Optional[str] = None
 
 class LectureResponse(BaseModel):
@@ -66,7 +69,7 @@ class LectureResponse(BaseModel):
     grade: Optional[str] = None
     description: Optional[str] = None
     requirements: str
-    content: Optional[str] = None
+    content: Optional[Any] = None  # Can be string or dict for structured content
     status: str
     created_at: datetime
     updated_at: datetime

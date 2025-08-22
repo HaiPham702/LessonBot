@@ -71,7 +71,6 @@
 }
 
 .main-content {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 1rem 2rem;
 }
